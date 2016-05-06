@@ -1,0 +1,39 @@
+# Usage:
+#   dakota -i xxx.in -o run.out > stdout.out
+
+environment
+    #graphics
+    tabular_graphics_data
+    tabular_graphics_file = 'table_out.dat'
+
+model
+        single
+
+method
+    nl2sol 
+    max_iterations 100
+    convergence_tolerance = 1e-4
+
+variables,
+        continuous_design = 1
+        initial_point    0.1
+        lower_bounds 	   0.001
+        upper_bounds     1
+        descriptors      'u_m'
+
+interface
+	fork
+	  analysis_driver = 'fluidity_cylinder.py'
+	  parameters_file = 'params.in'
+	  results_file    = 'results.out'
+	  work_directory directory_tag
+#	  link_files = 'templatedir/*'
+	  
+# uncomment to leave params.in and results.out files in work_dir subdirectories
+	  named 'workdir' file_save  directory_save
+	  aprepro
+
+response
+        calibration_terms = 1
+        numerical_gradients
+        no_hessians
