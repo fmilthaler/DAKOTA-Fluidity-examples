@@ -1,0 +1,20 @@
+#######################
+# DAKOTA output files #
+#######################
+*.rst
+*.dat
+run.out
+stdout.out
+workdir.*
+
+#######################
+# Fluidity files      #
+#######################
+*.vtu
+*.pvtu
+*.log
+*.err
+*.stat
+*.detectors
+*.detectors.dat
+*.msh
