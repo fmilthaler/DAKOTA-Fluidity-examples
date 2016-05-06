@@ -1,0 +1,46 @@
+# Usage:
+#   dakota -i xxx.in -o run.out > stdout.out
+
+environment
+    #graphics
+    tabular_graphics_data
+        tabular_graphics_file = 'table_out.dat'
+    
+method
+  multidim_parameter_study
+  	partitions = 6 6
+model
+  single
+
+  
+variables,
+	continuous_design = 2
+	  lower_bounds 	   1e4      1e4
+	  upper_bounds     1e5	  	 1e5
+	  descriptors    'width' 'length' 
+
+interface,
+	fork
+	  asynchronous
+	  evaluation_concurrency = 6
+	  analysis_driver = 'fluidity_tsunami.py'
+	  parameters_file = 'params.in'
+	  results_file    = 'results.out'
+	  work_directory directory_tag
+#	  link_files = 'templatedir/*'
+	  
+# uncomment to leave params.in and results.out files in work_dir subdirectories
+	  named 'workdir' file_save  directory_save
+	  aprepro
+	  
+## when using conmin_frcg (above) with analytic_gradients (below), 
+## need to turn off the active set vector as rosenbrock_bb does not parse it.
+ 	  deactivate active_set_vector
+	
+	
+responses
+  num_objective_functions = 1
+  no_gradients
+  no_hessians
+
+  sense 'max'
