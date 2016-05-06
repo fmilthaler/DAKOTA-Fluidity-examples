@@ -1,0 +1,38 @@
+environment
+        #graphics
+        tabular_graphics_data
+        tabular_graphics_file = 'table_out.dat'
+
+model
+        single
+
+method
+        nl2sol 
+        max_iterations 100
+        convergence_tolerance = 1e-4
+
+variables,
+        continuous_design = 1
+          initial_point    1.8
+          lower_bounds     -2.0
+          upper_bounds     3.0
+          descriptor       'x1' 
+
+
+interface
+        fork
+          analysis_driver = "driven_cavity_fluidity.py"
+          parameters_file = "params.in"
+          results_file = "results.out"
+          work_directory directory_tag 
+          named "workdir" directory_save file_save
+          #file_tag file_save 
+
+# uncomment to leave params.in and results.out files in work_dir subdirectories
+# 	  named 'workdir' file_save  directory_save
+	  aprepro
+
+response
+        calibration_terms = 1
+        numerical_gradients
+        no_hessians
